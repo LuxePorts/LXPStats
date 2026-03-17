@@ -58,59 +58,11 @@ block content
 
       div.clearfix
 
-    //- XDPoS Epoch Progress Section
+    //- XDPoS Epoch Section
     div.row.epoch-section(ng-cloak)
       div.col-xs-12
-        div.epoch-container
-          div.row
-            div.col-xs-3.epoch-info
-              div.epoch-number
-                span.epoch-label EPOCH
-                span.epoch-value {{ epoch.currentEpoch | number }}
-              div.checkpoint-indicator(ng-class="{'active': epoch.isCheckpoint}")
-                i.icon-block(ng-if="epoch.isCheckpoint")
-                span(ng-if="epoch.isCheckpoint") CHECKPOINT
-            div.col-xs-6.epoch-progress-wrapper
-              div.epoch-progress-container
-                div.epoch-progress-bar(style="width: {{ epoch.epochProgress }}%")
-                div.epoch-progress-text
-                  span Block {{ epoch.blocksInEpoch }} of {{ epoch.epochLength }}
-              div.epoch-blocks-info
-                span.start-block #{{ epoch.epochStartBlock | number }}
-                span.end-block #{{ epoch.epochEndBlock | number }}
-            div.col-xs-3.epoch-countdown
-              div.countdown-label Next Epoch In
-              div.countdown-blocks {{ epoch.blocksRemaining | number }} blocks
-              div.countdown-time ~{{ epoch.estimatedTimeRemaining | epochTimeFilter }}
-
-    //- XDPoS Double Validation Status Section
-    div.row.validation-section(ng-cloak)
-      div.col-xs-12
-        div.validation-container
-          div.row
-            div.col-xs-3.validation-stat
-              div.validation-icon(class="{{ validationStats.doubleValidationRate >= 95 ? 'text-success' : (validationStats.doubleValidationRate >= 80 ? 'text-warning' : 'text-danger') }}")
-                i.icon-check-o
-              div.validation-label Double Validation Rate
-              div.validation-value {{ validationStats.doubleValidationRate }}%
-            div.col-xs-3.validation-stat
-              div.dual-validator-icon
-                i.icon-check.text-success
-                i.icon-check.text-success
-              div.validation-label Double Validated
-              div.validation-value.text-success {{ validationStats.doubleValidated }}
-            div.col-xs-3.validation-stat
-              div.dual-validator-icon
-                i.icon-check.text-warning
-                i.icon-cancel.text-gray
-              div.validation-label Primary Only
-              div.validation-value.text-warning {{ validationStats.primaryOnly }}
-            div.col-xs-3.validation-stat
-              div.dual-validator-icon
-                i.icon-cancel.text-danger
-                i.icon-cancel.text-danger
-              div.validation-label Failed
-              div.validation-value.text-danger {{ validationStats.failed }}
+        div.big-info.text-info
+          span.small-title EPOCH {{ epoch.currentEpoch | number }} - Block {{ epoch.blocksInEpoch }} of {{ epoch.epochLength }} - Next in {{ epoch.blocksRemaining | number }} blocks
 
     div.row(ng-cloak)
       div.col-xs-12.stats-boxes(style="padding-top: 0px;")

@@ -31,26 +31,6 @@ html(ng-app="netStatsApp", ng-class="{'light-theme': isLightTheme}")
         color: #f59e0b;
         letter-spacing: 2px;
       }
-      .theme-toggle {
-        cursor: pointer;
-        padding: 8px 12px;
-        border-radius: 4px;
-        background: rgba(255,255,255,0.1);
-        color: #fff;
-        border: none;
-        font-size: 16px;
-        transition: all 0.3s ease;
-      }
-      .theme-toggle:hover {
-        background: rgba(255,255,255,0.2);
-      }
-      .navbar-right-controls {
-        float: right;
-        margin-top: 8px;
-        display: flex;
-        gap: 10px;
-        align-items: center;
-      }
   body
     nav.navbar.navbar-default
       div.container-fluid
@@ -60,7 +40,7 @@ html(ng-app="netStatsApp", ng-class="{'light-theme': isLightTheme}")
             span.brand-text LXP NETWORK
         div.navbar-right-controls(ng-controller='ThemeCtrl')
           button.theme-toggle(ng-click='toggleTheme()', title='Toggle theme')
-            i(ng-class="isLightTheme ? 'icon-bulb' : 'icon-moon'")
+            i(class='{{ isLightTheme ? "icon-bulb" : "icon-moon" }}')
     block content
 
     script(src="/js/netstats.min.js")
