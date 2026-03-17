@@ -142,6 +142,24 @@ block content
               span.leaderboard-blocks {{ mn.blocks }} blocks
               span.leaderboard-score {{ mn.score }} pts
 
+    //- Gas Price Prediction Section
+    div.row.gas-section(ng-cloak, ng-if="gasPrediction.current > 0")
+      div.col-xs-12
+        div.big-info
+          div.row
+            div.col-xs-4
+              span.small-title Current Gas Price
+              span.big-details.text-info {{ gasPrediction.current | gasPriceFilter }}
+            div.col-xs-4
+              span.small-title Predicted (Next Block)
+              span.big-details(ng-class="gasPrediction.trend == 'up' ? 'text-warning' : (gasPrediction.trend == 'down' ? 'text-success' : 'text-info')") {{ gasPrediction.predicted | gasPriceFilter }}
+            div.col-xs-4
+              span.small-title Trend
+              span.big-details(ng-class="gasPrediction.trend == 'up' ? 'text-warning' : (gasPrediction.trend == 'down' ? 'text-success' : 'text-info')")
+                span(ng-if="gasPrediction.trend == 'up'") ↑ Rising
+                span(ng-if="gasPrediction.trend == 'down'") ↓ Falling
+                span(ng-if="gasPrediction.trend == 'stable'") → Stable
+
     div.row(ng-cloak)
       div.col-xs-12.stats-boxes(style="padding-top: 0px;")
         div.row.second-row

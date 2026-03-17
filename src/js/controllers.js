@@ -86,6 +86,14 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 	$scope.masternodes = [];
 	$scope.showLeaderboard = false;
 
+	// Gas Price Prediction
+	$scope.gasPrediction = {
+		current: 0,
+		predicted: 0,
+		trend: 'stable',
+		confidence: 0
+	};
+
 	$scope.lastGasLimit = _.fill(Array(MAX_BINS), 2);
 	$scope.lastBlocksTime = _.fill(Array(MAX_BINS), 2);
 	$scope.difficultyChart = _.fill(Array(MAX_BINS), 2);
@@ -654,6 +662,7 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 		}
 
 		checkForForks();
+		calculateGasPrediction();
 	}
 
 	// Calculate masternode performance leaderboard
@@ -677,6 +686,41 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 		});
 
 		$scope.masternodes = masternodes;
+	}
+
+	// Calculate gas price prediction
+	function calculateGasPrediction() {
+		if(!$scope.bestStats || !$scope.bestStats.gasPrice) return;
+
+		var currentGas = parseInt($scope.bestStats.gasPrice) || 0;
+		var avgGas = 0;
+		var gasHistory = [];
+
+		_.forEach($scope.nodes, function(node) {
+			if(node.stats && node.stats.gasPrice) {
+				gasHistory.push(parseInt(node.stats.gasPrice) || 0);
+			}
+		});
+
+		if(gasHistory.length > 0) {
+			avgGas = Math.round(_.sum(gasHistory) / gasHistory.length);
+		}
+
+		var alpha = 0.3;
+		var predicted = Math.round(alpha * currentGas + (1 - alpha) * avgGas);
+
+		var trend = 'stable';
+		if(predicted > currentGas * 1.1) trend = 'up';
+		else if(predicted < currentGas * 0.9) trend = 'down';
+
+		var confidence = Math.min(100, Math.round((gasHistory.length / $scope.nodesActive) * 100));
+
+		$scope.gasPrediction = {
+			current: currentGas,
+			predicted: predicted,
+			trend: trend,
+			confidence: confidence
+		};
 	}
 
 	// function forkFilter(node)

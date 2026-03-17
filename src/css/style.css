@@ -1063,3 +1063,14 @@ body, .stat-holder, .navbar, .epoch-container, .validation-container, table {
   width: 60px;
   text-align: right;
 }
+
+/* Gas Price Prediction Section Styles */
+.gas-section {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.gas-section .big-info {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(16, 160, 222, 0.3);
+  padding: 15px 20px;
+}
