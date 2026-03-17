@@ -46,6 +46,15 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 		doubleValidationRate: 0
 	};
 
+	// Client Version Diversity
+	$scope.diversity = {
+		score: 0,
+		versions: [],
+		totalNodes: 0,
+		maxClientPercent: 0,
+		status: 'unknown'
+	};
+
 	$scope.lastGasLimit = _.fill(Array(MAX_BINS), 2);
 	$scope.lastBlocksTime = _.fill(Array(MAX_BINS), 2);
 	$scope.difficultyChart = _.fill(Array(MAX_BINS), 2);
@@ -689,5 +698,56 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 			return obj.replace(/\< *\/* *script *>*/gi,'').replace(/javascript/gi,'');
 		} else
 			return obj;
+	}
+
+	// Calculate client version diversity score
+	function calculateDiversity() {
+		if($scope.nodes.length === 0) return;
+
+		var versionCounts = {};
+		var totalNodes = $scope.nodes.length;
+
+		_.forEach($scope.nodes, function(node) {
+			var version = node.info.node || 'unknown';
+			// Extract just the client/version part (e.g., "Geth/v1.10.0")
+			var shortVersion = version.split('/').slice(0, 2).join('/');
+			versionCounts[shortVersion] = (versionCounts[shortVersion] || 0) + 1;
+		});
+
+		var versions = _.map(versionCounts, function(count, version) {
+			return {
+				version: version,
+				count: count,
+				percent: Math.round((count / totalNodes) * 100)
+			};
+		});
+
+		versions = _.sortByOrder(versions, 'count', false);
+
+		var maxCount = versions.length > 0 ? versions[0].count : 0;
+		var maxClientPercent = Math.round((maxCount / totalNodes) * 100);
+
+		// Shannon diversity index calculation (simplified)
+		var diversity = 0;
+		_.forEach(versionCounts, function(count) {
+			var p = count / totalNodes;
+			diversity -= p * Math.log2(p);
+		});
+
+		var maxDiversity = Math.log2(_.keys(versionCounts).length || 1);
+		var score = maxDiversity > 0 ? Math.round((diversity / maxDiversity) * 100) : 100;
+
+		var status = 'excellent';
+		if(maxClientPercent > 66) status = 'danger';
+		else if(maxClientPercent > 50) status = 'warning';
+		else if(maxClientPercent > 33) status = 'good';
+
+		$scope.diversity = {
+			score: score,
+			versions: versions,
+			totalNodes: totalNodes,
+			maxClientPercent: maxClientPercent,
+			status: status
+		};
 	}
 });

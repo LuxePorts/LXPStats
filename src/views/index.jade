@@ -77,6 +77,24 @@ block content
               span.checkpoint-hash {{ cp.hash | hashFilter }}
               span.checkpoint-time {{ cp.timestamp | blockTimeFilter }}
 
+    //- Client Version Diversity Section
+    div.row.diversity-section(ng-cloak, ng-if="diversity.totalNodes > 0")
+      div.col-xs-12
+        div.big-info
+          div.row
+            div.col-xs-3
+              span.small-title Client Diversity
+              span.big-details(ng-class="diversity.status == 'danger' ? 'text-danger' : (diversity.status == 'warning' ? 'text-warning' : 'text-success')") {{ diversity.score }}/100
+            div.col-xs-6
+              span.small-title Version Distribution
+              div.version-list
+                span.version-item(ng-repeat="v in diversity.versions | limitTo:3")
+                  span.version-name {{ v.version }}
+                  span.version-count {{ v.count }} ({{ v.percent }}%)
+            div.col-xs-3
+              span.small-title Top Client
+              span.big-details(ng-class="diversity.maxClientPercent > 50 ? 'text-warning' : 'text-success'") {{ diversity.maxClientPercent }}%
+
     div.row(ng-cloak)
       div.col-xs-12.stats-boxes(style="padding-top: 0px;")
         div.row.second-row

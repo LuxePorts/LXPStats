@@ -857,3 +857,32 @@ body, .stat-holder, .navbar, .epoch-container, .validation-container, table {
   color: #666;
   font-size: 12px;
 }
+
+/* Client Diversity Section Styles */
+.diversity-section {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.diversity-section .big-info {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(16, 160, 222, 0.3);
+  padding: 15px 20px;
+}
+.version-list {
+  display: flex;
+  gap: 20px;
+  margin-top: 5px;
+}
+.version-item {
+  display: flex;
+  flex-direction: column;
+}
+.version-name {
+  color: #10a0de;
+  font-size: 12px;
+  font-weight: bold;
+}
+.version-count {
+  color: #888;
+  font-size: 11px;
+}
