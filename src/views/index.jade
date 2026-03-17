@@ -83,6 +83,34 @@ block content
               div.countdown-blocks {{ epoch.blocksRemaining | number }} blocks
               div.countdown-time ~{{ epoch.estimatedTimeRemaining | epochTimeFilter }}
 
+    //- XDPoS Double Validation Status Section
+    div.row.validation-section(ng-cloak)
+      div.col-xs-12
+        div.validation-container
+          div.row
+            div.col-xs-3.validation-stat
+              div.validation-icon(class="{{ validationStats.doubleValidationRate >= 95 ? 'text-success' : (validationStats.doubleValidationRate >= 80 ? 'text-warning' : 'text-danger') }}")
+                i.icon-check-o
+              div.validation-label Double Validation Rate
+              div.validation-value {{ validationStats.doubleValidationRate }}%
+            div.col-xs-3.validation-stat
+              div.dual-validator-icon
+                i.icon-check.text-success
+                i.icon-check.text-success
+              div.validation-label Double Validated
+              div.validation-value.text-success {{ validationStats.doubleValidated }}
+            div.col-xs-3.validation-stat
+              div.dual-validator-icon
+                i.icon-check.text-warning
+                i.icon-cancel.text-gray
+              div.validation-label Primary Only
+              div.validation-value.text-warning {{ validationStats.primaryOnly }}
+            div.col-xs-3.validation-stat
+              div.dual-validator-icon
+                i.icon-cancel.text-danger
+                i.icon-cancel.text-danger
+              div.validation-label Failed
+              div.validation-value.text-danger {{ validationStats.failed }}
 
     div.row(ng-cloak)
       div.col-xs-12.stats-boxes(style="padding-top: 0px;")

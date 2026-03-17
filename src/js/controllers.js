@@ -36,6 +36,15 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 		epochLength: 900
 	};
 	$scope.checkpoints = [];
+	
+	// XDPoS Validation Stats
+	$scope.validationStats = {
+		totalBlocks: 0,
+		doubleValidated: 0,
+		primaryOnly: 0,
+		failed: 0,
+		doubleValidationRate: 0
+	};
 
 	$scope.lastGasLimit = _.fill(Array(MAX_BINS), 2);
 	$scope.lastBlocksTime = _.fill(Array(MAX_BINS), 2);
@@ -387,6 +396,11 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 				
 				if( !_.isUndefined(data.checkpoints) ) {
 					$scope.checkpoints = data.checkpoints;
+				}
+				
+				// XDPoS Validation Stats
+				if( !_.isUndefined(data.validationStats) ) {
+					$scope.validationStats = data.validationStats;
 				}
 
 				break;

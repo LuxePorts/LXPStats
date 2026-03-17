@@ -610,3 +610,74 @@ svg .y.axis .tick:first-child text {
 .checkpoint-block td:first-child::before {
 	content: "👑 ";
 }
+
+/* ========================================
+   XDPoS Double Validation Section Styles
+   ======================================== */
+
+.validation-section {
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+
+.validation-container {
+	background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+	border: 1px solid rgba(16, 160, 222, 0.3);
+	border-radius: 8px;
+	padding: 12px 20px;
+}
+
+.validation-stat {
+	text-align: center;
+	padding: 10px;
+}
+
+.validation-icon {
+	font-size: 24px;
+	margin-bottom: 5px;
+}
+
+.dual-validator-icon {
+	display: flex;
+	justify-content: center;
+	gap: 5px;
+	font-size: 20px;
+	margin-bottom: 5px;
+}
+
+.validation-label {
+	font-size: 11px;
+	color: #888;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	margin-bottom: 3px;
+}
+
+.validation-value {
+	font-size: 20px;
+	font-weight: bold;
+	color: #fff;
+}
+
+/* Double validation indicator in node table */
+.node-validation-status {
+	display: inline-flex;
+	gap: 3px;
+	font-size: 14px;
+}
+
+.node-validation-status .primary {
+	color: #7bcc3a;
+}
+
+.node-validation-status .backup {
+	color: #10a0de;
+}
+
+.node-validation-status .missing {
+	color: #F74B4B;
+}
+
+.node-validation-status .unknown {
+	color: #777;
+}
