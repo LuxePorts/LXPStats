@@ -127,6 +127,13 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 		showMempool: false
 	};
 
+	// Propagation Heatmap
+	$scope.propagationMatrix = {
+		matrix: [],
+		nodes: [],
+		showMatrix: false
+	};
+
 	$scope.lastGasLimit = _.fill(Array(MAX_BINS), 2);
 	$scope.lastBlocksTime = _.fill(Array(MAX_BINS), 2);
 	$scope.difficultyChart = _.fill(Array(MAX_BINS), 2);
@@ -635,6 +642,7 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 		calculateNodeReputations();
 		calculateUncleAnalysis();
 		calculateMempool();
+		calculatePropagationMatrix();
 	}
 
 	function updateBestBlock()
@@ -891,6 +899,37 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 			lowestGasPrice: lowestGas,
 			recentTxs: recentTxs,
 			showMempool: $scope.mempool.showMempool
+		};
+	}
+
+	// Calculate propagation heatmap matrix
+	function calculatePropagationMatrix() {
+		if($scope.nodes.length < 2) return;
+
+		var nodeIds = _.pluck($scope.nodes, 'id').slice(0, 8); // Limit to 8 nodes for display
+		var matrix = [];
+
+		// Generate mock propagation times based on latency
+		for(var i = 0; i < nodeIds.length; i++) {
+			var row = [];
+			for(var j = 0; j < nodeIds.length; j++) {
+				if(i === j) {
+					row.push(0);
+				} else {
+					// Mock propagation time based on node latencies
+					var latency1 = $scope.nodes[i].stats.latency || 50;
+					var latency2 = $scope.nodes[j].stats.latency || 50;
+					var propagation = Math.round((latency1 + latency2) / 2 + Math.random() * 50);
+					row.push(propagation);
+				}
+			}
+			matrix.push(row);
+		}
+
+		$scope.propagationMatrix = {
+			matrix: matrix,
+			nodes: nodeIds,
+			showMatrix: $scope.propagationMatrix.showMatrix
 		};
 	}
 

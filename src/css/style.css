@@ -1286,3 +1286,58 @@ body, .stat-holder, .navbar, .epoch-container, .validation-container, table {
   color: #888;
   font-size: 11px;
 }
+
+/* Propagation Heatmap Matrix Styles */
+.propagation-section {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.propagation-section .big-info {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(255, 129, 0, 0.3);
+  padding: 15px 20px;
+}
+.propagation-matrix {
+  margin-top: 15px;
+  overflow-x: auto;
+}
+.matrix-header, .matrix-row {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 2px;
+}
+.matrix-cell {
+  width: 70px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 3px;
+}
+.matrix-label {
+  width: 70px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  color: #888;
+  padding-right: 10px;
+}
+.matrix-zero {
+  background: rgba(255,255,255,0.1);
+  color: #666;
+}
+.matrix-fast {
+  background: rgba(123, 204, 58, 0.3);
+  color: #7bcc3a;
+}
+.matrix-medium {
+  background: rgba(255, 209, 98, 0.3);
+  color: #FFD162;
+}
+.matrix-slow {
+  background: rgba(247, 75, 75, 0.3);
+  color: #F74B4B;
+}

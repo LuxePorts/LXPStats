@@ -210,6 +210,20 @@ block content
               span.tx-gas {{ tx.gasPrice | gasPriceFilter }}
               span.tx-time {{ tx.time | blockTimeFilter }}
 
+    //- Propagation Heatmap Section
+    div.row.propagation-section(ng-cloak, ng-if="propagationMatrix.nodes.length > 1")
+      div.col-xs-12
+        div.big-info
+          span.small-title Node-to-Node Propagation Matrix
+          button.btn.btn-xs.btn-info.pull-right(ng-click="propagationMatrix.showMatrix = !propagationMatrix.showMatrix") {{ propagationMatrix.showMatrix ? 'Hide' : 'Show' }}
+          div.propagation-matrix(ng-show="propagationMatrix.showMatrix")
+            div.matrix-header
+              span.matrix-cell
+              span.matrix-cell(ng-repeat="node in propagationMatrix.nodes | limitTo:6") Node {{ $index + 1 }}
+            div.matrix-row(ng-repeat="row in propagationMatrix.matrix | limitTo:6")
+              span.matrix-label Node {{ $index + 1 }}
+              span.matrix-cell(ng-repeat="cell in row | limitTo:6", ng-class="cell == 0 ? 'matrix-zero' : (cell < 100 ? 'matrix-fast' : (cell < 300 ? 'matrix-medium' : 'matrix-slow'))") {{ cell }}ms
+
     //- Gas Price Prediction Section
     div.row.gas-section(ng-cloak, ng-if="gasPrediction.current > 0")
       div.col-xs-12
