@@ -194,6 +194,22 @@ block content
                 span.result-label ROI:
                 span.result-value {{ stakingCalc.roi }}%
 
+    //- Mempool Visualizer Section
+    div.row.mempool-section(ng-cloak)
+      div.col-xs-12
+        div.big-info
+          span.small-title Mempool Status
+          button.btn.btn-xs.btn-info.pull-right(ng-click="mempool.showMempool = !mempool.showMempool") {{ mempool.showMempool ? 'Hide' : 'Show' }}
+          div.mempool-stats
+            span.mempool-pending Pending: {{ mempool.pendingCount }}
+            span.mempool-avg Avg Gas: {{ mempool.avgGasPrice | gasPriceFilter }}
+            span.mempool-range Range: {{ mempool.lowestGasPrice | gasPriceFilter }} - {{ mempool.highestGasPrice | gasPriceFilter }}
+          div.mempool-txs(ng-show="mempool.showMempool")
+            div.tx-item(ng-repeat="tx in mempool.recentTxs")
+              span.tx-hash {{ tx.hash | hashFilter }}
+              span.tx-gas {{ tx.gasPrice | gasPriceFilter }}
+              span.tx-time {{ tx.time | blockTimeFilter }}
+
     //- Gas Price Prediction Section
     div.row.gas-section(ng-cloak, ng-if="gasPrediction.current > 0")
       div.col-xs-12

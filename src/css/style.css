@@ -1234,3 +1234,55 @@ body, .stat-holder, .navbar, .epoch-container, .validation-container, table {
   color: #f59e0b;
   font-size: 24px;
 }
+
+/* Mempool Visualizer Section Styles */
+.mempool-section {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.mempool-section .big-info {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(16, 160, 222, 0.3);
+  padding: 15px 20px;
+}
+.mempool-stats {
+  display: flex;
+  gap: 30px;
+  margin: 10px 0;
+  font-size: 14px;
+}
+.mempool-pending {
+  color: #10a0de;
+  font-weight: bold;
+}
+.mempool-avg {
+  color: #7bcc3a;
+}
+.mempool-range {
+  color: #888;
+}
+.mempool-txs {
+  margin-top: 10px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+.tx-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  font-size: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.tx-hash {
+  color: #10a0de;
+  font-family: monospace;
+  width: 150px;
+}
+.tx-gas {
+  color: #f59e0b;
+  width: 100px;
+}
+.tx-time {
+  color: #888;
+  font-size: 11px;
+}

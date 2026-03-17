@@ -117,6 +117,16 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 		showCalculator: false
 	};
 
+	// Mempool Visualizer
+	$scope.mempool = {
+		pendingCount: 0,
+		avgGasPrice: 0,
+		highestGasPrice: 0,
+		lowestGasPrice: 0,
+		recentTxs: [],
+		showMempool: false
+	};
+
 	$scope.lastGasLimit = _.fill(Array(MAX_BINS), 2);
 	$scope.lastBlocksTime = _.fill(Array(MAX_BINS), 2);
 	$scope.difficultyChart = _.fill(Array(MAX_BINS), 2);
@@ -624,6 +634,7 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 
 		calculateNodeReputations();
 		calculateUncleAnalysis();
+		calculateMempool();
 	}
 
 	function updateBestBlock()
@@ -837,6 +848,51 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 	$scope.initStakingCalc = function() {
 		$scope.calculateStaking();
 	};
+
+	// Calculate mempool statistics
+	function calculateMempool() {
+		if($scope.nodes.length === 0) return;
+
+		var pendingCounts = [];
+		var gasPrices = [];
+		var totalPending = 0;
+
+		_.forEach($scope.nodes, function(node) {
+			if(node.stats) {
+				var pending = node.stats.pending || 0;
+				pendingCounts.push(pending);
+				totalPending += pending;
+
+				if(node.stats.gasPrice) {
+					gasPrices.push(parseInt(node.stats.gasPrice));
+				}
+			}
+		});
+
+		var avgPending = pendingCounts.length > 0 ? Math.round(totalPending / pendingCounts.length) : 0;
+		var avgGas = gasPrices.length > 0 ? Math.round(_.sum(gasPrices) / gasPrices.length) : 0;
+		var highestGas = gasPrices.length > 0 ? _.max(gasPrices) : 0;
+		var lowestGas = gasPrices.length > 0 ? _.min(gasPrices) : 0;
+
+		// Generate mock recent transactions
+		var recentTxs = [];
+		for(var i = 0; i < Math.min(5, avgPending); i++) {
+			recentTxs.push({
+				hash: '0x' + Math.random().toString(16).substr(2, 40),
+				gasPrice: Math.round(avgGas * (0.8 + Math.random() * 0.4)),
+				time: new Date().getTime() - Math.floor(Math.random() * 60000)
+			});
+		}
+
+		$scope.mempool = {
+			pendingCount: avgPending,
+			avgGasPrice: avgGas,
+			highestGasPrice: highestGas,
+			lowestGasPrice: lowestGas,
+			recentTxs: recentTxs,
+			showMempool: $scope.mempool.showMempool
+		};
+	}
 
 	// function forkFilter(node)
 	// {
