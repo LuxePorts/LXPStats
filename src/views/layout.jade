@@ -3,11 +3,41 @@ doctype html
 html(ng-app="netStatsApp")
   head
     meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0")
-    title Ethereum Network Status
+    title LXP Network Status
     style(type="text/css") [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak { display: none !important; }
     link(rel='stylesheet', href='//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700')
     link(rel='stylesheet', href='/css/netstats.min.css')
+    style.
+      .navbar-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .navbar-brand .logo {
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 18px;
+        color: #000;
+      }
+      .navbar-brand .brand-text {
+        font-weight: 700;
+        font-size: 18px;
+        color: #f59e0b;
+        letter-spacing: 2px;
+      }
   body
+    nav.navbar.navbar-default
+      div.container-fluid
+        div.navbar-header
+          a.navbar-brand(href='/')
+            span.logo L
+            span.brand-text LXP NETWORK
     block content
 
     script(src="/js/netstats.min.js")
