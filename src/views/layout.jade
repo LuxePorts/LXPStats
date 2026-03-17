@@ -36,7 +36,7 @@ html(ng-app="netStatsApp", ng-class="{'light-theme': isLightTheme}")
       div.container-fluid
         div.navbar-header
           a.navbar-brand(href='/')
-            img.logo-img(src='/images/lxp-logo.png', alt='LXP Logo', style='height: 40px; width: auto; margin-right: 10px;')
+            img.logo-img(src='https://cdn.openscan.ai/tokens/img/lxp.png', alt='LXP Logo', style='height: 40px; width: auto; margin-right: 10px;', onerror="this.src='/images/lxp-logo.png'")
             span.brand-text LXP NETWORK
         div.navbar-right-controls(ng-controller='ThemeCtrl')
           button.theme-toggle(ng-click='toggleTheme()', title='Toggle theme')
