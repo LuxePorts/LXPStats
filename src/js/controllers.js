@@ -94,6 +94,18 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 		confidence: 0
 	};
 
+	// Node Reputation System
+	$scope.nodeReputations = [];
+	$scope.showReputations = false;
+
+	// Uncle Rate Analysis
+	$scope.uncleAnalysis = {
+		totalUncles: 0,
+		uncleRate: 0,
+		avgUnclesPerBlock: 0,
+		byMiner: []
+	};
+
 	$scope.lastGasLimit = _.fill(Array(MAX_BINS), 2);
 	$scope.lastBlocksTime = _.fill(Array(MAX_BINS), 2);
 	$scope.difficultyChart = _.fill(Array(MAX_BINS), 2);
@@ -598,6 +610,9 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 					longitude: 0
 				};
 		});
+
+		calculateNodeReputations();
+		calculateUncleAnalysis();
 	}
 
 	function updateBestBlock()
@@ -720,6 +735,66 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 			predicted: predicted,
 			trend: trend,
 			confidence: confidence
+		};
+	}
+
+	// Calculate node reputation scores
+	function calculateNodeReputations() {
+		if($scope.nodes.length === 0) return;
+
+		var reputations = _.map($scope.nodes, function(node) {
+			var uptimeScore = (node.stats.uptime || 0);
+			var latencyScore = Math.max(0, 100 - (node.stats.latency || 0) / 10);
+			var blockScore = node.stats.block && node.stats.block.number >= $scope.bestBlock - 5 ? 100 : 50;
+			var peerScore = Math.min(100, (node.stats.peers || 0) * 20);
+
+			var totalScore = Math.round((uptimeScore * 0.4) + (latencyScore * 0.3) + (blockScore * 0.2) + (peerScore * 0.1));
+
+			var badge = 'new';
+			if(totalScore >= 90) badge = 'elite';
+			else if(totalScore >= 80) badge = 'trusted';
+			else if(totalScore >= 60) badge = 'established';
+
+			return {
+				id: node.id,
+				name: node.info.name || 'Unknown',
+				score: totalScore,
+				badge: badge,
+				uptime: node.stats.uptime || 0,
+				latency: node.stats.latency || 0
+			};
+		});
+
+		$scope.nodeReputations = _.sortByOrder(reputations, 'score', false).slice(0, 10);
+	}
+
+	// Calculate uncle rate analysis
+	function calculateUncleAnalysis() {
+		if(!$scope.miners || $scope.miners.length === 0) return;
+
+		var totalUncles = $scope.uncleCount || 0;
+		var totalBlocks = $scope.bestBlock || 1;
+		var uncleRate = (totalUncles / totalBlocks) * 100;
+
+		// Calculate uncle rate by miner (simplified)
+		var byMiner = _.map($scope.miners, function(miner) {
+			// Estimate uncle rate based on block percentage
+			var blockShare = miner.blocks / _.sum(_.pluck($scope.miners, 'blocks'));
+			var estimatedUncles = Math.round(totalUncles * blockShare);
+
+			return {
+				miner: miner.miner,
+				blocks: miner.blocks,
+				estimatedUncles: estimatedUncles,
+				uncleRate: blockShare > 0 ? (estimatedUncles / miner.blocks * 100).toFixed(2) : 0
+			};
+		});
+
+		$scope.uncleAnalysis = {
+			totalUncles: totalUncles,
+			uncleRate: uncleRate.toFixed(2),
+			avgUnclesPerBlock: (totalUncles / totalBlocks).toFixed(3),
+			byMiner: _.sortByOrder(byMiner, 'estimatedUncles', false).slice(0, 5)
 		};
 	}
 

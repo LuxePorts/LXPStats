@@ -1074,3 +1074,106 @@ body, .stat-holder, .navbar, .epoch-container, .validation-container, table {
   border: 1px solid rgba(16, 160, 222, 0.3);
   padding: 15px 20px;
 }
+
+/* Node Reputation Section Styles */
+.reputation-section {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.reputation-section .big-info {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(123, 204, 58, 0.3);
+  padding: 15px 20px;
+}
+.reputation-list {
+  margin-top: 10px;
+}
+.reputation-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 13px;
+}
+.reputation-item:last-child {
+  border-bottom: none;
+}
+.reputation-rank {
+  font-size: 16px;
+  font-weight: bold;
+  color: #7bcc3a;
+  width: 25px;
+}
+.reputation-badge {
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 90px;
+  text-align: center;
+}
+.badge-elite { background: linear-gradient(135deg, #9b59b6, #8e44ad); color: #fff; }
+.badge-trusted { background: linear-gradient(135deg, #3498db, #2980b9); color: #fff; }
+.badge-established { background: linear-gradient(135deg, #2ecc71, #27ae60); color: #fff; }
+.badge-new { background: linear-gradient(135deg, #95a5a6, #7f8c8d); color: #fff; }
+.reputation-name {
+  color: #fff;
+  flex: 1;
+}
+.reputation-score {
+  color: #f59e0b;
+  font-weight: bold;
+  width: 60px;
+}
+.reputation-uptime {
+  color: #888;
+  font-size: 12px;
+  width: 80px;
+  text-align: right;
+}
+
+/* Uncle Rate Analysis Section Styles */
+.uncle-section {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.uncle-section .big-info {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(255, 129, 0, 0.3);
+  padding: 15px 20px;
+}
+.uncle-stats {
+  display: flex;
+  gap: 30px;
+  margin: 10px 0;
+  font-size: 14px;
+}
+.uncle-total {
+  color: #ff8100;
+  font-weight: bold;
+}
+.uncle-rate {
+  color: #FFD162;
+}
+.uncle-avg {
+  color: #888;
+}
+.uncle-miners {
+  margin-top: 10px;
+}
+.uncle-miner {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  font-size: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.miner-address {
+  color: #10a0de;
+  font-family: monospace;
+}
+.miner-uncles {
+  color: #ff8100;
+}

@@ -142,6 +142,34 @@ block content
               span.leaderboard-blocks {{ mn.blocks }} blocks
               span.leaderboard-score {{ mn.score }} pts
 
+    //- Node Reputation Section
+    div.row.reputation-section(ng-cloak)
+      div.col-xs-12
+        div.big-info
+          span.small-title Node Reputation Leaderboard
+          button.btn.btn-xs.btn-info.pull-right(ng-click="showReputations = !showReputations") {{ showReputations ? 'Hide' : 'Show' }}
+          div.reputation-list(ng-show="showReputations")
+            div.reputation-item(ng-repeat="rep in nodeReputations | limitTo:5")
+              span.reputation-rank {{ $index + 1 }}
+              span.reputation-badge(class="badge-{{ rep.badge }}") {{ rep.badge }}
+              span.reputation-name {{ rep.name }}
+              span.reputation-score {{ rep.score }}/100
+              span.reputation-uptime {{ rep.uptime | number:1 }}% up
+
+    //- Uncle Rate Analysis Section
+    div.row.uncle-section(ng-cloak)
+      div.col-xs-12
+        div.big-info
+          span.small-title Uncle Rate Analysis
+          div.uncle-stats
+            span.uncle-total Total: {{ uncleAnalysis.totalUncles }}
+            span.uncle-rate Rate: {{ uncleAnalysis.uncleRate }}%
+            span.uncle-avg Avg: {{ uncleAnalysis.avgUnclesPerBlock }}/block
+          div.uncle-miners
+            div.uncle-miner(ng-repeat="m in uncleAnalysis.byMiner | limitTo:3")
+              span.miner-address {{ m.miner | hashFilter }}
+              span.miner-uncles {{ m.estimatedUncles }} uncles
+
     //- Gas Price Prediction Section
     div.row.gas-section(ng-cloak, ng-if="gasPrediction.current > 0")
       div.col-xs-12
