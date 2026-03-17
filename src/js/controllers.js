@@ -73,6 +73,19 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 		status: 'pending'
 	};
 
+	// Network Fork Status
+	$scope.forkStatus = {
+		isForked: false,
+		hashCount: 1,
+		primaryHash: '',
+		primaryHashCount: 0,
+		consensusPercent: 100
+	};
+
+	// Masternode Performance Leaderboard
+	$scope.masternodes = [];
+	$scope.showLeaderboard = false;
+
 	$scope.lastGasLimit = _.fill(Array(MAX_BINS), 2);
 	$scope.lastBlocksTime = _.fill(Array(MAX_BINS), 2);
 	$scope.difficultyChart = _.fill(Array(MAX_BINS), 2);
@@ -501,6 +514,8 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 					$scope.miners[key].name = name;
 			});
 		}
+
+		calculateMasternodeLeaderboard();
 	}
 
 	function addNewNode(data)
@@ -637,6 +652,31 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 				$scope.lastDifficulty = $scope.bestStats.block.difficulty;
 			}
 		}
+
+		checkForForks();
+	}
+
+	// Calculate masternode performance leaderboard
+	function calculateMasternodeLeaderboard() {
+		if($scope.miners.length === 0) return;
+
+		var masternodes = _.map($scope.miners, function(miner, index) {
+			var score = 100 - (index * 10); // Higher rank = higher score
+			var badge = 'platinum';
+			if(score < 90) badge = 'gold';
+			if(score < 80) badge = 'silver';
+			if(score < 70) badge = 'bronze';
+
+			return {
+				address: miner.miner,
+				blocks: miner.blocks,
+				score: score,
+				badge: badge,
+				rank: index + 1
+			};
+		});
+
+		$scope.masternodes = masternodes;
 	}
 
 	// function forkFilter(node)
@@ -781,6 +821,32 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 			totalNodes: totalNodes,
 			upgradedNodes: upgradedNodes,
 			status: upgradedNodes / totalNodes >= 0.75 ? 'ready' : 'pending'
+		};
+	}
+
+	// Check for network forks
+	function checkForForks() {
+		if($scope.nodes.length === 0) return;
+
+		var blockHashes = {};
+		var bestBlock = $scope.bestBlock;
+
+		_.forEach($scope.nodes, function(node) {
+			if(node.stats.block.number === bestBlock) {
+				var hash = node.stats.block.hash;
+				blockHashes[hash] = (blockHashes[hash] || 0) + 1;
+			}
+		});
+
+		var hashCount = _.keys(blockHashes).length;
+		var isForked = hashCount > 1;
+
+		$scope.forkStatus = {
+			isForked: isForked,
+			hashCount: hashCount,
+			primaryHash: _.maxBy(_.keys(blockHashes), function(h) { return blockHashes[h]; }),
+			primaryHashCount: _.max(blockHashes),
+			consensusPercent: Math.round((_.max(blockHashes) / $scope.nodesActive) * 100) || 0
 		};
 	}
 });

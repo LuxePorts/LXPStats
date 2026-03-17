@@ -967,3 +967,99 @@ body, .stat-holder, .navbar, .epoch-container, .validation-container, table {
   background: #FFD162;
   color: #000;
 }
+
+/* Network Fork Status Section Styles */
+.fork-section {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.fork-section .big-info {
+  background: linear-gradient(135deg, #3d1a1a 0%, #2e1616 100%);
+  border: 2px solid #F74B4B;
+  padding: 15px 20px;
+  animation: pulse-red 2s infinite;
+}
+@keyframes pulse-red {
+  0%, 100% { box-shadow: 0 0 5px rgba(247, 75, 75, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(247, 75, 75, 0.8); }
+}
+.fork-alert .small-title {
+  font-size: 16px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+}
+.fork-details {
+  display: flex;
+  gap: 30px;
+  font-size: 13px;
+}
+.fork-hashes {
+  color: #F74B4B;
+  font-weight: bold;
+}
+.fork-consensus {
+  color: #FFD162;
+}
+.fork-primary {
+  color: #888;
+  font-family: monospace;
+}
+
+/* Masternode Leaderboard Section Styles */
+.masternode-section {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.masternode-section .big-info {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 15px 20px;
+}
+.leaderboard-list {
+  margin-top: 10px;
+}
+.leaderboard-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 13px;
+}
+.leaderboard-item:last-child {
+  border-bottom: none;
+}
+.leaderboard-rank {
+  font-size: 18px;
+  font-weight: bold;
+  color: #f59e0b;
+  width: 30px;
+}
+.leaderboard-badge {
+  padding: 3px 10px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 70px;
+  text-align: center;
+}
+.badge-platinum { background: linear-gradient(135deg, #e5e4e2, #a0a0a0); color: #000; }
+.badge-gold { background: linear-gradient(135deg, #ffd700, #daa520); color: #000; }
+.badge-silver { background: linear-gradient(135deg, #c0c0c0, #a0a0a0); color: #000; }
+.badge-bronze { background: linear-gradient(135deg, #cd7f32, #8b4513); color: #fff; }
+.leaderboard-address {
+  color: #10a0de;
+  font-family: monospace;
+  flex: 1;
+}
+.leaderboard-blocks {
+  color: #7bcc3a;
+  font-weight: bold;
+}
+.leaderboard-score {
+  color: #888;
+  width: 60px;
+  text-align: right;
+}

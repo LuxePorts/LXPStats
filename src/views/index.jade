@@ -118,6 +118,30 @@ block content
             span.upgrade-rate(ng-class="upgradeReadiness.status == 'ready' ? 'text-success' : 'text-warning'") {{ upgradeReadiness.adoptionRate }}%
             span.upgrade-badge(ng-class="upgradeReadiness.status == 'ready' ? 'badge-success' : 'badge-warning'") {{ upgradeReadiness.status == 'ready' ? 'READY' : 'PENDING' }}
 
+    //- Network Fork Status Section
+    div.row.fork-section(ng-cloak, ng-if="forkStatus.isForked")
+      div.col-xs-12
+        div.big-info.fork-alert
+          span.small-title.text-danger NETWORK FORK DETECTED
+          div.fork-details
+            span.fork-hashes {{ forkStatus.hashCount }} different hashes at block {{ bestBlock }}
+            span.fork-consensus Consensus: {{ forkStatus.consensusPercent }}%
+            span.fork-primary Primary: {{ forkStatus.primaryHash | hashFilter }}
+
+    //- Masternode Performance Leaderboard
+    div.row.masternode-section(ng-cloak)
+      div.col-xs-12
+        div.big-info
+          span.small-title Masternode Leaderboard
+          button.btn.btn-xs.btn-info.pull-right(ng-click="showLeaderboard = !showLeaderboard") {{ showLeaderboard ? 'Hide' : 'Show' }}
+          div.leaderboard-list(ng-show="showLeaderboard")
+            div.leaderboard-item(ng-repeat="mn in masternodes | limitTo:5")
+              span.leaderboard-rank {{ mn.rank }}
+              span.leaderboard-badge(class="badge-{{ mn.badge }}") {{ mn.badge }}
+              span.leaderboard-address {{ mn.address | hashFilter }}
+              span.leaderboard-blocks {{ mn.blocks }} blocks
+              span.leaderboard-score {{ mn.score }} pts
+
     div.row(ng-cloak)
       div.col-xs-12.stats-boxes(style="padding-top: 0px;")
         div.row.second-row
