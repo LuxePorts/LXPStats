@@ -63,6 +63,19 @@ block content
       div.col-xs-12
         div.big-info.text-info
           span.small-title EPOCH {{ epoch.currentEpoch | number }} - Block {{ epoch.blocksInEpoch }} of {{ epoch.epochLength }} - Next in {{ epoch.blocksRemaining | number }} blocks
+          button.btn.btn-xs.btn-info.pull-right(ng-click="showCheckpoints = !showCheckpoints") Show Checkpoints
+
+    //- Checkpoint Timeline (collapsible)
+    div.row.checkpoint-section(ng-cloak, ng-show="showCheckpoints")
+      div.col-xs-12
+        div.big-info
+          span.small-title Recent Checkpoints
+          div.checkpoint-list
+            div.checkpoint-item(ng-repeat="cp in checkpoints track by cp.blockNumber")
+              span.checkpoint-epoch Epoch {{ cp.epoch }}
+              span.checkpoint-block Block {{ cp.blockNumber | number }}
+              span.checkpoint-hash {{ cp.hash | hashFilter }}
+              span.checkpoint-time {{ cp.timestamp | blockTimeFilter }}
 
     div.row(ng-cloak)
       div.col-xs-12.stats-boxes(style="padding-top: 0px;")

@@ -815,3 +815,45 @@ body, .stat-holder, .navbar, .epoch-container, .validation-container, table {
   border: 1px solid rgba(245, 158, 11, 0.3);
   padding: 10px 20px;
 }
+
+/* Checkpoint Section Styles */
+.checkpoint-section {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.checkpoint-section .big-info {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 15px 20px;
+}
+.checkpoint-list {
+  margin-top: 10px;
+}
+.checkpoint-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 13px;
+}
+.checkpoint-item:last-child {
+  border-bottom: none;
+}
+.checkpoint-epoch {
+  color: #f59e0b;
+  font-weight: bold;
+  width: 100px;
+}
+.checkpoint-block {
+  color: #10a0de;
+  width: 120px;
+}
+.checkpoint-hash {
+  color: #888;
+  font-family: monospace;
+  width: 150px;
+}
+.checkpoint-time {
+  color: #666;
+  font-size: 12px;
+}
