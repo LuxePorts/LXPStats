@@ -55,6 +55,24 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 		status: 'unknown'
 	};
 
+	// Bootnode Health
+	$scope.bootnodes = [
+		{ id: 'bootnode1', name: 'Primary Bootnode', url: 'enode://ec569f5d52cefee5c5405a0c5db720dc7061f3085e0682dd8321413430ddda6a177b85db75b0daf83d2e68760ba3f5beb4ba9e333e7d52072fba4d39b05a0451@78.129.229.60:30301', status: 'unknown', latency: 0, lastCheck: 0 },
+		{ id: 'bootnode2', name: 'Backup Bootnode', url: 'enode://...', status: 'unknown', latency: 0, lastCheck: 0 }
+	];
+
+	$scope.showBootnodes = false;
+
+	// Network Upgrade Readiness
+	$scope.upgradeReadiness = {
+		targetVersion: '1.0.0',
+		currentVersion: '0.9.0',
+		adoptionRate: 0,
+		totalNodes: 0,
+		upgradedNodes: 0,
+		status: 'pending'
+	};
+
 	$scope.lastGasLimit = _.fill(Array(MAX_BINS), 2);
 	$scope.lastBlocksTime = _.fill(Array(MAX_BINS), 2);
 	$scope.difficultyChart = _.fill(Array(MAX_BINS), 2);
@@ -748,6 +766,21 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 			totalNodes: totalNodes,
 			maxClientPercent: maxClientPercent,
 			status: status
+		};
+
+		// Calculate upgrade readiness
+		var upgradedNodes = _.filter($scope.nodes, function(node) {
+			var version = node.info.node || '';
+			return version.indexOf('v1.0') >= 0 || version.indexOf('v1.1') >= 0 || version.indexOf('v1.2') >= 0;
+		}).length;
+
+		$scope.upgradeReadiness = {
+			targetVersion: 'v1.0.x',
+			currentVersion: 'v0.9.x',
+			adoptionRate: Math.round((upgradedNodes / totalNodes) * 100),
+			totalNodes: totalNodes,
+			upgradedNodes: upgradedNodes,
+			status: upgradedNodes / totalNodes >= 0.75 ? 'ready' : 'pending'
 		};
 	}
 });

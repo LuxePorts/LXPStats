@@ -95,6 +95,29 @@ block content
               span.small-title Top Client
               span.big-details(ng-class="diversity.maxClientPercent > 50 ? 'text-warning' : 'text-success'") {{ diversity.maxClientPercent }}%
 
+    //- Bootnode Health Section
+    div.row.bootnode-section(ng-cloak)
+      div.col-xs-12
+        div.big-info
+          span.small-title Bootnode Health
+          button.btn.btn-xs.btn-info.pull-right(ng-click="showBootnodes = !showBootnodes") {{ showBootnodes ? 'Hide' : 'Show' }}
+          div.bootnode-list(ng-show="showBootnodes")
+            div.bootnode-item(ng-repeat="bn in bootnodes")
+              span.bootnode-name {{ bn.name }}
+              span.bootnode-status(ng-class="bn.status == 'online' ? 'text-success' : (bn.status == 'offline' ? 'text-danger' : 'text-gray')") {{ bn.status }}
+              span.bootnode-latency(ng-if="bn.latency > 0") {{ bn.latency }}ms
+
+    //- Network Upgrade Readiness Section
+    div.row.upgrade-section(ng-cloak)
+      div.col-xs-12
+        div.big-info
+          span.small-title Network Upgrade Readiness
+          div.upgrade-status
+            span.upgrade-label Target: {{ upgradeReadiness.targetVersion }}
+            span.upgrade-progress {{ upgradeReadiness.upgradedNodes }} / {{ upgradeReadiness.totalNodes }} nodes
+            span.upgrade-rate(ng-class="upgradeReadiness.status == 'ready' ? 'text-success' : 'text-warning'") {{ upgradeReadiness.adoptionRate }}%
+            span.upgrade-badge(ng-class="upgradeReadiness.status == 'ready' ? 'badge-success' : 'badge-warning'") {{ upgradeReadiness.status == 'ready' ? 'READY' : 'PENDING' }}
+
     div.row(ng-cloak)
       div.col-xs-12.stats-boxes(style="padding-top: 0px;")
         div.row.second-row

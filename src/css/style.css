@@ -886,3 +886,84 @@ body, .stat-holder, .navbar, .epoch-container, .validation-container, table {
   color: #888;
   font-size: 11px;
 }
+
+/* Bootnode Health Section Styles */
+.bootnode-section {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.bootnode-section .big-info {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(123, 204, 58, 0.3);
+  padding: 15px 20px;
+}
+.bootnode-list {
+  margin-top: 10px;
+}
+.bootnode-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 13px;
+}
+.bootnode-item:last-child {
+  border-bottom: none;
+}
+.bootnode-name {
+  color: #fff;
+  width: 150px;
+}
+.bootnode-status {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+.bootnode-latency {
+  color: #888;
+  font-size: 12px;
+}
+
+/* Network Upgrade Readiness Section Styles */
+.upgrade-section {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.upgrade-section .big-info {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  padding: 15px 20px;
+}
+.upgrade-status {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 10px;
+}
+.upgrade-label {
+  color: #888;
+  font-size: 12px;
+}
+.upgrade-progress {
+  color: #fff;
+  font-size: 14px;
+}
+.upgrade-rate {
+  font-size: 24px;
+  font-weight: bold;
+}
+.upgrade-badge {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.badge-success {
+  background: #7bcc3a;
+  color: #000;
+}
+.badge-warning {
+  background: #FFD162;
+  color: #000;
+}
