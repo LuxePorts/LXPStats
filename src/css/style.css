@@ -1177,3 +1177,60 @@ body, .stat-holder, .navbar, .epoch-container, .validation-container, table {
 .miner-uncles {
   color: #ff8100;
 }
+
+/* XDC Staking Calculator Section Styles */
+.staking-section {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.staking-section .big-info {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 15px 20px;
+}
+.staking-calculator {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.staking-input {
+  margin-bottom: 15px;
+}
+.staking-input .input-label {
+  display: block;
+  color: #888;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+.staking-input input {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #f59e0b;
+  font-size: 16px;
+  font-weight: bold;
+}
+.staking-results {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+.result-item {
+  text-align: center;
+}
+.result-item .result-label {
+  display: block;
+  color: #888;
+  font-size: 11px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.result-item .result-value {
+  display: block;
+  color: #7bcc3a;
+  font-size: 18px;
+  font-weight: bold;
+}
+.result-item.roi .result-value {
+  color: #f59e0b;
+  font-size: 24px;
+}

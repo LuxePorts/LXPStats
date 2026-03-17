@@ -170,6 +170,30 @@ block content
               span.miner-address {{ m.miner | hashFilter }}
               span.miner-uncles {{ m.estimatedUncles }} uncles
 
+    //- XDC Staking Calculator Section
+    div.row.staking-section(ng-cloak)
+      div.col-xs-12
+        div.big-info
+          span.small-title XDC Staking Calculator
+          button.btn.btn-xs.btn-info.pull-right(ng-click="stakingCalc.showCalculator = !stakingCalc.showCalculator") {{ stakingCalc.showCalculator ? 'Hide' : 'Show' }}
+          div.staking-calculator(ng-show="stakingCalc.showCalculator", ng-init="initStakingCalc()")
+            div.staking-input
+              span.input-label Vote Amount (XDC):
+              input.form-control(type="number", ng-model="stakingCalc.voteAmount", ng-change="calculateStaking()", min="1000", step="1000")
+            div.staking-results
+              div.result-item
+                span.result-label Daily Reward:
+                span.result-value {{ stakingCalc.rewardPerDay }} XDC
+              div.result-item
+                span.result-label Monthly Reward:
+                span.result-value {{ stakingCalc.rewardPerMonth }} XDC
+              div.result-item
+                span.result-label Yearly Reward:
+                span.result-value {{ stakingCalc.rewardPerYear }} XDC
+              div.result-item.roi
+                span.result-label ROI:
+                span.result-value {{ stakingCalc.roi }}%
+
     //- Gas Price Prediction Section
     div.row.gas-section(ng-cloak, ng-if="gasPrediction.current > 0")
       div.col-xs-12

@@ -106,6 +106,17 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 		byMiner: []
 	};
 
+	// XDC Staking Calculator
+	$scope.stakingCalc = {
+		voteAmount: 1000000,
+		masternode: null,
+		rewardPerDay: 0,
+		rewardPerMonth: 0,
+		rewardPerYear: 0,
+		roi: 0,
+		showCalculator: false
+	};
+
 	$scope.lastGasLimit = _.fill(Array(MAX_BINS), 2);
 	$scope.lastBlocksTime = _.fill(Array(MAX_BINS), 2);
 	$scope.difficultyChart = _.fill(Array(MAX_BINS), 2);
@@ -797,6 +808,35 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 			byMiner: _.sortByOrder(byMiner, 'estimatedUncles', false).slice(0, 5)
 		};
 	}
+
+	// Calculate staking rewards
+	$scope.calculateStaking = function() {
+		var voteAmount = parseFloat($scope.stakingCalc.voteAmount) || 0;
+		
+		// XDC staking formula (simplified)
+		// Daily block reward is approximately 5000 XDC
+		var dailyBlockReward = 5000;
+		var voterShare = 0.5; // 50% distributed to voters
+		
+		// Assuming average total stake per masternode is 10M XDC
+		var avgTotalStake = 10000000;
+		var voterRatio = voteAmount / avgTotalStake;
+		
+		var rewardPerDay = dailyBlockReward * voterShare * voterRatio * 0.98; // 2% fee
+		var rewardPerMonth = rewardPerDay * 30;
+		var rewardPerYear = rewardPerDay * 365;
+		var roi = voteAmount > 0 ? ((rewardPerYear / voteAmount) * 100).toFixed(2) : 0;
+
+		$scope.stakingCalc.rewardPerDay = rewardPerDay.toFixed(2);
+		$scope.stakingCalc.rewardPerMonth = rewardPerMonth.toFixed(2);
+		$scope.stakingCalc.rewardPerYear = rewardPerYear.toFixed(2);
+		$scope.stakingCalc.roi = roi;
+	};
+
+	// Initialize staking calculator
+	$scope.initStakingCalc = function() {
+		$scope.calculateStaking();
+	};
 
 	// function forkFilter(node)
 	// {
