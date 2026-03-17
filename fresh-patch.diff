@@ -1,0 +1,12 @@
+--- a/node_modules/fresh/index.js
++++ b/node_modules/fresh/index.js
+@@ -23,6 +23,9 @@ function fresh(req, res) {
+   var etagMatches = true;
+   var notModified = true;
+ 
++  // safety check for Node.js v24 compatibility
++  if (!req || !res) return false;
++
+   // fields
+   var modifiedSince = req['if-modified-since'];
+   var noneMatch = req['if-none-match'];
