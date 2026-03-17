@@ -20,6 +20,22 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 	$scope.avgHashrate = 0;
 	$scope.uncleCount = 0;
 	$scope.bestStats = {};
+	
+	// XDPoS Epoch Data
+	$scope.epoch = {
+		currentEpoch: 0,
+		currentBlock: 0,
+		epochStartBlock: 0,
+		epochEndBlock: 899,
+		blocksInEpoch: 0,
+		blocksRemaining: 900,
+		epochProgress: 0,
+		isCheckpoint: false,
+		avgBlockTime: 2,
+		estimatedTimeRemaining: 1800,
+		epochLength: 900
+	};
+	$scope.checkpoints = [];
 
 	$scope.lastGasLimit = _.fill(Array(MAX_BINS), 2);
 	$scope.lastBlocksTime = _.fill(Array(MAX_BINS), 2);
@@ -362,6 +378,15 @@ netStatsApp.controller('StatsCtrl', function($scope, $filter, $localStorage, soc
 				if( !_.isEqual($scope.miners, data.miners) ) {
 					$scope.miners = data.miners;
 					getMinersNames();
+				}
+				
+				// XDPoS Epoch Data
+				if( !_.isUndefined(data.epoch) ) {
+					$scope.epoch = data.epoch;
+				}
+				
+				if( !_.isUndefined(data.checkpoints) ) {
+					$scope.checkpoints = data.checkpoints;
 				}
 
 				break;

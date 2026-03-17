@@ -58,6 +58,31 @@ block content
 
       div.clearfix
 
+    //- XDPoS Epoch Progress Section
+    div.row.epoch-section(ng-cloak)
+      div.col-xs-12
+        div.epoch-container
+          div.row
+            div.col-xs-3.epoch-info
+              div.epoch-number
+                span.epoch-label EPOCH
+                span.epoch-value {{ epoch.currentEpoch | number }}
+              div.checkpoint-indicator(ng-class="{'active': epoch.isCheckpoint}")
+                i.icon-block(ng-if="epoch.isCheckpoint")
+                span(ng-if="epoch.isCheckpoint") CHECKPOINT
+            div.col-xs-6.epoch-progress-wrapper
+              div.epoch-progress-container
+                div.epoch-progress-bar(style="width: {{ epoch.epochProgress }}%")
+                div.epoch-progress-text
+                  span Block {{ epoch.blocksInEpoch }} of {{ epoch.epochLength }}
+              div.epoch-blocks-info
+                span.start-block #{{ epoch.epochStartBlock | number }}
+                span.end-block #{{ epoch.epochEndBlock | number }}
+            div.col-xs-3.epoch-countdown
+              div.countdown-label Next Epoch In
+              div.countdown-blocks {{ epoch.blocksRemaining | number }} blocks
+              div.countdown-time ~{{ epoch.estimatedTimeRemaining | epochTimeFilter }}
+
 
     div.row(ng-cloak)
       div.col-xs-12.stats-boxes(style="padding-top: 0px;")
