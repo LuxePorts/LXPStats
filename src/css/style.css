@@ -681,3 +681,112 @@ svg .y.axis .tick:first-child text {
 .node-validation-status .unknown {
 	color: #777;
 }
+
+/* ========================================
+   Light Theme Styles
+   ======================================== */
+
+.light-theme body {
+	background: #f5f5f5;
+	color: #333;
+}
+
+.light-theme .stat-holder {
+	background: #fff;
+	border: 1px solid rgba(0,0,0,0.1);
+	box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.light-theme .navbar.navbar-default {
+	background: #fff;
+	border-bottom: 1px solid #ddd;
+}
+
+.light-theme .navbar-brand .brand-text {
+	color: #d97706;
+}
+
+.light-theme .text-info {
+	color: #0d7cb5 !important;
+}
+
+.light-theme .text-success {
+	color: #3d8a1e !important;
+}
+
+.light-theme .text-warning {
+	color: #b8860b !important;
+}
+
+.light-theme .text-danger {
+	color: #c0392b !important;
+}
+
+.light-theme .text-gray {
+	color: #999 !important;
+}
+
+.light-theme .small-title {
+	color: #666;
+}
+
+.light-theme .big-details {
+	color: #333;
+}
+
+.light-theme table.table-striped tbody tr:nth-of-type(odd) {
+	background: #f9f9f9;
+}
+
+.light-theme table.table-striped tbody tr:nth-of-type(even) {
+	background: #fff;
+}
+
+.light-theme table.table-striped thead tr {
+	background: #f0f0f0;
+}
+
+.light-theme table td {
+	color: #333;
+	border-color: #ddd;
+}
+
+.light-theme .epoch-container {
+	background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+	border-color: rgba(245, 158, 11, 0.5);
+}
+
+.light-theme .validation-container {
+	background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+	border-color: rgba(16, 160, 222, 0.5);
+}
+
+.light-theme .epoch-progress-container {
+	background: rgba(0,0,0,0.05);
+}
+
+.light-theme .epoch-value {
+	color: #d97706;
+}
+
+.light-theme .countdown-blocks {
+	color: #0d7cb5;
+}
+
+.light-theme .validation-value {
+	color: #333;
+}
+
+.light-theme .theme-toggle {
+	background: rgba(0,0,0,0.05);
+	color: #333;
+}
+
+.light-theme .theme-toggle:hover {
+	background: rgba(0,0,0,0.1);
+}
+
+/* Smooth theme transition */
+body, .stat-holder, .navbar, .epoch-container, .validation-container, table {
+	transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

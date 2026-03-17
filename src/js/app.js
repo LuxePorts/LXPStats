@@ -38,3 +38,24 @@ netStatsApp.factory('_', function ($rootScope) {
 	var lodash = window._;
 	return lodash;
 });
+
+/* Theme Controller */
+netStatsApp.controller('ThemeCtrl', function($scope, $localStorage) {
+	// Check for saved preference or system preference
+	if(typeof $localStorage.isLightTheme === 'undefined') {
+		// Check system preference
+		var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+		$localStorage.isLightTheme = !prefersDark;
+	}
+	
+	$scope.isLightTheme = $localStorage.isLightTheme;
+	
+	// Apply theme to parent scope
+	$scope.$parent.isLightTheme = $scope.isLightTheme;
+	
+	$scope.toggleTheme = function() {
+		$scope.isLightTheme = !$scope.isLightTheme;
+		$localStorage.isLightTheme = $scope.isLightTheme;
+		$scope.$parent.isLightTheme = $scope.isLightTheme;
+	};
+});
